@@ -22,7 +22,7 @@
 		</el-col>
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
-				<!--导航菜单-->
+				<!--导航菜单-展开后-->
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-if="!collapsed">
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
@@ -44,7 +44,8 @@
 						</template>
 						<template v-else>
 							<li class="el-submenu">
-								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
+								<!--修改样式bug--没有子集的情况下，hover状态的不去扩展子元素 min-width: 60px!important;-->
+								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;min-width: 60px!important;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
 							</li>
 						</template>
 					</li>
@@ -146,6 +147,7 @@
 		top: 0px;
 		bottom: 0px;
 		width: 100%;
+		/*头部导航栏*/
 		.header {
 			height: 60px;
 			line-height: 60px;
@@ -168,7 +170,6 @@
 				}
 			}
 			.logo {
-				//width:230px;
 				height:60px;
 				font-size: 22px;
 				padding-left:20px;
@@ -199,19 +200,17 @@
 				cursor: pointer;
 			}
 		}
+		/*内容主体部分*/
 		.main {
 			display: flex;
-			// background: #324057;
 			position: absolute;
 			top: 60px;
 			bottom: 0px;
 			overflow: hidden;
+			/*主体侧边栏*/
 			aside {
 				flex:0 0 230px;
 				width: 230px;
-				// position: absolute;
-				// top: 0px;
-				// bottom: 0px;
 				.el-menu{
 					height: 100%;
 				}
@@ -239,18 +238,12 @@
 				flex:0 0 230px;
 				width: 230px;
 			}
+			/*主体右侧*/
 			.content-container {
-				// background: #f1f2f7;
 				flex:1;
-				// position: absolute;
-				// right: 0px;
-				// top: 0px;
-				// bottom: 0px;
-				// left: 230px;
 				overflow-y: scroll;
 				padding: 20px;
 				.breadcrumb-container {
-					//margin-bottom: 15px;
 					.title {
 						width: 200px;
 						float: left;
